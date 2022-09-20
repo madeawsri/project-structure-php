@@ -1,0 +1,18 @@
+{
+    "require": {
+        "php": "^7.4",
+        "windwalker/renderer": "^3.5",
+        "symfony/var-dumper": "^5.4",
+        "illuminate/database": "^8.83",
+        "illuminate/view": "^8.83",
+        "dompdf/dompdf": "^1.2",
+        "phpoffice/phpspreadsheet": "^1.23"
+    },
+    
+    "autoload": {
+        "psr-4": {
+            "DB\\": "../../models/"
+        }
+    }
+
+}

@@ -1,0 +1,1 @@
+<h1>page Login</h1><?php /**PATH E:\laragon\www\mvc\modules\login/view.blade.php ENDPATH**/ ?>
