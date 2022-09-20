@@ -3,6 +3,6 @@ Frontend &amp; Backend  , Full Stack Web Developers
 
 Folder
 -----
-models
-public
+models,
+public,
 template
