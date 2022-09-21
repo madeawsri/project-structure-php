@@ -1,88 +1,10 @@
 <?php
-
-/**
- * FUNCTION FOR SYSTEM
- */
-function root_url()
-{
-  return Config::ACCEPT_URL_TYPE . "://{$_SERVER['SERVER_NAME']}{$_SERVER['REQUEST_URI']}";
-}
-
-function base_url()
-{
-  $project_folder = "/" . Config::PROJECT_FOLDER;
-  return Config::ACCEPT_URL_TYPE . "://{$_SERVER['HTTP_HOST']}{$project_folder}/public/";
-}
-
-function base_default_url()
-{
-  return base_project() . "/" . Config::PROJECT_DEFUALT_MODULES . "/";
-}
-
-function debug_time()
+// no cache file > end the link file 
+function _time()
 {
   return Config::PROJECT_DEBUG ? '?' . time() : '';
 }
-
-function base_project()
-{
-  $project_folder = "/" . Config::PROJECT_FOLDER;
-  return Config::ACCEPT_URL_TYPE . "://{$_SERVER['HTTP_HOST']}{$project_folder}";
-}
-function base_link($link)
-{
-  return base_project() . "/{$link}/";
-}
-function base_module()
-{
-  return base_project() . "/modules/" . Core::$module_name;
-}
-function link_module_db($jsondb = 'json')
-{
-  return base_module() . "/{$jsondb}.php";
-}
-function link_module_class($class = 'myclass')
-{
-  return base_module() . "/{$class}.php";
-}
-function link_module_js($index = 'index')
-{
-  return base_module() . "/{$index}.js" . debug_time();
-}
-function link_core_js($index = 'Core')
-{
-  return base_project() . "/app/libs/{$index}.js" . debug_time();
-}
-function link_helper_db()
-{
-  return base_link('helpers') . "json.php";
-}
-
-function base_js()
-{
-  return "
-    <script>
-       var jModuleDb = '" . link_module_db() . "'
-       ,jHelperDb = '" . link_helper_db() . "'
-       ,jBaseIndex = '" . base_link('index') . "'
-       ,jBaseLogin = '" . base_link('login') . "'
-       ,jBaseHome = '" . base_link('account') . "'
-       ,jBaseURL = '" . base_url() . "'
-       ,jModule = '" . base_link(Core::$module_name) . "'
-       ,jFnModule = '".link_module_class()."';
-    </script>
-    <!-- Core JS -->
-       <script src='" . link_core_js() . "'></script>
-    <!-- Modules JS -->
-       <script src='" . link_module_js() . "'></script>
-    ";
-}
-
-function module_js($module_name)
-{
-  return " <script src='" . link_module_js($module_name) . "'></script>";
-}
-
+// router form get url
 function get_module_name()
 {
   $url = isset($_GET['url']) ? $_GET['url'] : Core::DEFAULT_MODULE_NAME;
@@ -96,4 +18,42 @@ function get_module_name()
   } else {
     return  Core::DEFAULT_MODULE_NAME;
   }
+}
+// base root dir
+function base_dir($folder = '')
+{
+  return __DIR__ . '/../../' . ltrim($folder ? $folder : Config::PROJECT_FOLDER, '/');
+}
+// base root url
+function base_url($folder = '')
+{
+  return Config::ACCEPT_URL_TYPE . "://{$_SERVER['HTTP_HOST']}/" . ltrim($folder ? $folder : Config::PROJECT_FOLDER, '/');
+}
+// link module
+function base_module($module_name)
+{
+  return base_url('modules') . "/" . ltrim($module_name ? $module_name : Config::PROJECT_DEFUALT_MODULES, '/');
+}
+// link to helper file css
+function base_helper_css($fname = 'core')
+{
+  return  base_url('app/helper') . "/{$fname}.css" . _time();
+}
+// link to helper file js
+function base_helper_js($fname = 'core')
+{
+  return  base_url('app/helper') . "/{$fname}.js" . _time();
+}
+
+// base link module to db 
+function base_module_db($module_name,$db='json'){
+   return base_module($module_name."/{$db}.php")._time();
+}
+// base link module to js 
+function base_module_js($module_name,$js='index'){
+  return base_module($module_name."/{$js}.js")._time();
+}
+// base link module to css
+function base_module_css($module_name,$css='index'){
+  return base_module($module_name."/{$css}.css")._time();
 }
