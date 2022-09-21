@@ -29,11 +29,7 @@ function base_url($folder = '')
 {
   return Config::ACCEPT_URL_TYPE . "://{$_SERVER['HTTP_HOST']}/" . ltrim($folder ? $folder : Config::PROJECT_FOLDER, '/');
 }
-// link module
-function base_module($module_name)
-{
-  return base_url('modules') . "/" . ltrim($module_name ? $module_name : Config::PROJECT_DEFUALT_MODULES, '/');
-}
+
 // link to helper file css
 function base_helper_css($fname = 'core')
 {
@@ -45,15 +41,21 @@ function base_helper_js($fname = 'core')
   return  base_url('app/helper') . "/{$fname}.js" . _time();
 }
 
+// link module
+function base_module($module_name='index')
+{
+  return base_url(ltrim($module_name ? $module_name : Config::PROJECT_DEFUALT_MODULES, '/'));
+}
+
 // base link module to db 
-function base_module_db($module_name,$db='json'){
-   return base_module($module_name."/{$db}.php")._time();
+function base_module_db($module_name='index',$db='json'){
+   return base_module('modules/'.$module_name."/{$db}.php")._time();
 }
 // base link module to js 
-function base_module_js($module_name,$js='index'){
-  return base_module($module_name."/{$js}.js")._time();
+function base_module_js($module_name='index',$js='index'){
+  return base_module('modules/'.$module_name."/{$js}.js")._time();
 }
 // base link module to css
-function base_module_css($module_name,$css='index'){
-  return base_module($module_name."/{$css}.css")._time();
+function base_module_css($module_name='index',$css='index'){
+  return base_module('modules/'.$module_name."/{$css}.css")._time();
 }
