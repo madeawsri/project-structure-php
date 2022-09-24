@@ -8,10 +8,12 @@
         "dompdf/dompdf": "^1.2",
         "phpoffice/phpspreadsheet": "^1.23"
     },
-    
+    "config": {
+        "vendor-dir": "app/libs/vendor"
+    },
     "autoload": {
         "psr-4": {
-            "DB\\": "../../models/"
+            "DB\\": "models"
         }
     }
 
